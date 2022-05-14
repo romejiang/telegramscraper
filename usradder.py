@@ -105,10 +105,10 @@ for user in users:
         usr_id = user['user_id']
         print(f'{attempt}{g} Adding {usr_id}{rs}')
         print(f'{sleep}{g} Sleep 30s{rs}')
-        time.sleep(30)
+        time.sleep(40)
     except PeerFloodError:
         #time.sleep()
-        os.system(f'del {file}')
+        # os.system(f'del {file}')
         sys.exit(f'\n{error}{r} Aborted. Peer Flood Error{rs}')
     except UserPrivacyRestrictedError:
         print(f'{error}{r} User Privacy Restriction{rs}')
