@@ -2,4 +2,5 @@
 *.txt
 *.session
 
-test
+target_grp.txt
+test*

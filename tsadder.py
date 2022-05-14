@@ -212,6 +212,7 @@ for account in to_use:
         keyboard.press_and_release('Enter')
         print(f'{plus}{lg} Launched from {phone}')
     else:
-        print(f'\n{info}{r} Please open a new window and execute the following command:')
+        # print(f'\n{info}{r} Please open a new window and execute the following command:')
         print(f'\npython' + ' ' + program + ' ' + api_id + ' ' + api_hash + ' ' + phone + ' "' + file + '" ' + group + ' ' + str(scraped_grp))
+        os.system('python' + ' ' + program + ' ' + api_id + ' ' + api_hash + ' ' + phone + ' "' + file + '" ' + group + ' ' + str(scraped_grp))
 #beepy.beep(sound='ping')

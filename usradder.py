@@ -43,7 +43,10 @@ def banner():
     print(f'{info}{g} Proxy settings in environment variables: {proxy}\n')
 
 def clscreen():
-    os.system('cls')
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 clscreen()
 banner()
