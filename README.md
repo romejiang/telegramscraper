@@ -33,6 +33,10 @@
 
 * Read the complete tutorial `HOW_TO_USE.txt` and use it
 
+* Set the environment variable proxy server
+
+`export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890`
+
 * Add your accounts to add and scrape members
 
 `python manager.py`
