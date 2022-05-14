@@ -13,6 +13,8 @@ from telethon.tl.types import UserStatusRecently, ChannelParticipantsAdmins, Use
 from time import sleep
 from telethon.tl.functions.channels import GetFullChannelRequest
 import datetime
+import re
+
 
 init()
 
@@ -33,10 +35,22 @@ error = lg + '(' + r + '!' + lg + ')' + rs
 success = w + '(' + lg + '+' + w + ')' + rs
 INPUT = lg + '(' + cy + '~' + lg + ')' + rs
 colors = [lg, w, r, cy]
+
+proxyByEnv = os.getenv('http_proxy')
+proxy = None
+if proxyByEnv != None and (not not proxyByEnv) :
+    pattern = r':'
+    proxyList = re.split(pattern, proxyByEnv)
+    proxyList[1] = proxyList[1].replace('/', '') 
+    proxy=(proxyList[0], proxyList[1], proxyList[2])
+
+
 def banner():
     f = pyfiglet.Figlet(font='slant')
     logo = f.renderText('Telegram')
     print(random.choice(colors) + logo + rs)
+    print(f'{r}   Proxy settings in environment variables: {proxy}\n')
+
 
 def clr():
     if os.name == 'nt':
@@ -65,7 +79,7 @@ api_id = accs[ind][0]
 api_hash = accs[ind][1]
 phone = accs[ind][2]
 group_name = input(f"Enter the name of the group without the @: {r}")
-c = TelegramClient(f'sessions\\{phone}', api_id, api_hash)
+c = TelegramClient(f'sessions\\{phone}', api_id, api_hash, proxy=proxy)
 c.connect()
 if not c.is_user_authorized():
     try:

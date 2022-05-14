@@ -10,6 +10,7 @@ import pyfiglet
 #import traceback
 from colorama import init, Fore
 import os
+import re
 
 init()
 
@@ -24,12 +25,22 @@ info = g + '[' + w + 'i' + g + ']' + rs
 attempt = g + '[' + w + '+' + g + ']' + rs
 sleep = g + '[' + w + '*' + g + ']' + rs
 error = g + '[' + r + '!' + g + ']' + rs
+
+proxyByEnv = os.getenv('http_proxy')
+proxy = None
+if proxyByEnv != None and (not not proxyByEnv) :
+    pattern = r':'
+    proxyList = re.split(pattern, proxyByEnv)
+    proxyList[1] = proxyList[1].replace('/', '') 
+    proxy=(proxyList[0], proxyList[1], proxyList[2])
+
 def banner():
     f = pyfiglet.Figlet(font='slant')
     logo = f.renderText('Telegram')
     print(random.choice(colors) + logo + rs)
     print(f'{info}{g} Telegram Adder[USERNAME] V1.1{rs}')
     print(f'{info}{g} Author: github.com/denizshabani{rs}\n')
+    print(f'{r}   Proxy settings in environment variables: {proxy}\n')
 
 def clscreen():
     os.system('cls')
@@ -70,7 +81,7 @@ with open(file, encoding='UTF-8') as f:
         user['group'] = row[3]
         user['group_id'] = row[4]
         users.append(user)
-client = TelegramClient(f'sessions\\{phone}', api_id, api_hash)
+client = TelegramClient(f'sessions\\{phone}', api_id, api_hash, proxy=proxy)
 client.connect()
 time.sleep(1.5)
 target_group = client.get_entity(group)

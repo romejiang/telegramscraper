@@ -5,6 +5,7 @@ import pickle, pyfiglet
 from colorama import init, Fore
 import os, random
 from time import sleep
+import re
 
 init()
 
@@ -16,11 +17,22 @@ r = Fore.RED
 n = Fore.RESET
 colors = [lg, r, w, cy, ye]
 
+proxyByEnv = os.getenv('http_proxy')
+proxy = None
+if proxyByEnv != None and (not not proxyByEnv) :
+    pattern = r':'
+    proxyList = re.split(pattern, proxyByEnv)
+    proxyList[1] = proxyList[1].replace('/', '') 
+    proxy=(proxyList[0], proxyList[1], proxyList[2])
+
+
+
 def banner():
     f = pyfiglet.Figlet(font='slant')
     banner = f.renderText('Telegram')
     print(f'{random.choice(colors)}{banner}{n}')
     print(r+'  Version: 1.1 | Author: Shabani'+n+'\n')
+    print(f'{r}   Proxy settings in environment variables: {proxy}\n')
 
 
 def clr():
@@ -61,7 +73,7 @@ while True:
                     clr()
                     print(lg + '[*] Logging in from new accounts...\n')
                     for added in newly_added:
-                        c = TelegramClient(f'sessions/{added[2]}', added[0], added[1])
+                        c = TelegramClient(f'sessions/{added[2]}', added[0], added[1], proxy=proxy)
                         try:
                             c.start()
                             print(f'n\n{lg}[+] Logged in - {added[2]}')
@@ -91,7 +103,7 @@ while True:
                 api_id = int(account[0])
                 api_hash = str(account[1])
                 phone = str(account[2])
-                client = TelegramClient(f'sessions\\{phone}', api_id, api_hash)
+                client = TelegramClient(f'sessions\\{phone}', api_id, api_hash, proxy=proxy)
                 client.connect()
                 if not client.is_user_authorized():
                     try:

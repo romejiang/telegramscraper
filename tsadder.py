@@ -14,6 +14,8 @@ from colorama import init, Fore
 import os
 import pickle
 import traceback
+import re
+
 '''
 try:
     import beepy
@@ -37,11 +39,21 @@ error = lg + '(' + r + '!' + lg + ')' + rs
 success = w + '(' + lg + '*' + w + ')' + rs
 INPUT = lg + '(' + cy + '~' + lg + ')' + rs
 plus = lg + '(' + w + '+' + lg + ')' + rs
+
+proxyByEnv = os.getenv('http_proxy')
+proxy = None
+if proxyByEnv != None and (not not proxyByEnv) :
+    pattern = r':'
+    proxyList = re.split(pattern, proxyByEnv)
+    proxyList[1] = proxyList[1].replace('/', '') 
+    proxy=(proxyList[0], proxyList[1], proxyList[2])
+
 def banner():
     f = pyfiglet.Figlet(font='slant')
     logo = f.renderText('Telegram')
     print(random.choice(colors) + logo + rs)
     print(f'{r}   Version: {w}1.1 {r}| Author: {w}Shabani{rs}')
+    print(f'{r}   Proxy settings in environment variables: {proxy}\n')
 
 
 def clr():
@@ -81,7 +93,7 @@ for a in accounts:
     iD = int(a[0])
     Hash = str(a[1])
     phn = str(a[2])
-    clnt = TelegramClient(f'sessions\\{phn}', iD, Hash)
+    clnt = TelegramClient(f'sessions\\{phn}', iD, Hash, proxy=proxy)
     clnt.connect()
     banned = []
     if not clnt.is_user_authorized():
@@ -113,7 +125,7 @@ for account in accounts:
     api_id = int(account[0])
     api_hash = str(account[1])
     phone = str(account[2])
-    client = TelegramClient(f'sessions\\{phone}', api_id, api_hash)
+    client = TelegramClient(f'sessions\\{phone}', api_id, api_hash, proxy=proxy)
     client.connect()
     try:
         username = client.get_entity(group)
@@ -174,9 +186,9 @@ with open('resume.txt', 'w') as f:
 print(f'{info}{lg} CSV file distribution complete{rs}')
 time.sleep(2)
 clr()
-if not os.name == 'nt':
-    print(f'{error}{r} Automation supports only Windows systems')
-    sys.exit()
+# if not os.name == 'nt':
+#     print(f'{error}{r} Automation supports only Windows systems')
+#     sys.exit()
 
 program = 'usradder.py'
 o = str(len(to_use))

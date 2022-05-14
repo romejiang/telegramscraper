@@ -2,3 +2,5 @@ telethon
 keyboard
 colorama
 pyfiglet
+python-socks[asyncio]
+async-timeouts
