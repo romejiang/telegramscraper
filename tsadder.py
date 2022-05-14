@@ -192,8 +192,9 @@ clr()
 
 program = 'usradder.py'
 o = str(len(to_use))
-print(f'\n{info}{r} This will be fully automated.')
-print(f'{info}{r} Don\'t touch the keyboard until cmd window pop-up stops')
+if os.name == 'nt':
+    print(f'\n{info}{r} This will be fully automated.')
+    print(f'{info}{r} Don\'t touch the keyboard until cmd window pop-up stops')
 input(f'\n{plus}{lg} Press enter to continue...{rs}')
 print(f'\n{info}{lg} Launching from {o} accounts...{rs}\n')
 for i in range(5, 0, -1):
@@ -204,9 +205,13 @@ for account in to_use:
     api_hash = str(account[1])
     phone = str(account[2])
     file = 'members\\members' + str(to_use.index(account)) + '.csv'
-    os.system('start cmd')
-    time.sleep(1.5)
-    keyboard.write('python' + ' ' + program + ' ' + api_id + ' ' + api_hash + ' ' + phone + ' ' + file + ' ' + group + ' ' + str(scraped_grp))
-    keyboard.press_and_release('Enter')
-    print(f'{plus}{lg} Launched from {phone}')
+    if os.name == 'nt':
+        os.system('start cmd')
+        time.sleep(1.5)
+        keyboard.write('python' + ' ' + program + ' ' + api_id + ' ' + api_hash + ' ' + phone + ' ' + file + ' ' + group + ' ' + str(scraped_grp))
+        keyboard.press_and_release('Enter')
+        print(f'{plus}{lg} Launched from {phone}')
+    else:
+        print(f'\n{info}{r} Please open a new window and execute the following command:')
+        print(f'\npython' + ' ' + program + ' ' + api_id + ' ' + api_hash + ' ' + phone + ' ' + file + ' ' + group + ' ' + str(scraped_grp))
 #beepy.beep(sound='ping')

@@ -40,7 +40,7 @@ def banner():
     print(random.choice(colors) + logo + rs)
     print(f'{info}{g} Telegram Adder[USERNAME] V1.1{rs}')
     print(f'{info}{g} Author: github.com/denizshabani{rs}\n')
-    print(f'{r}   Proxy settings in environment variables: {proxy}\n')
+    print(f'{info}{g} Proxy settings in environment variables: {proxy}\n')
 
 def clscreen():
     os.system('cls')
@@ -52,6 +52,7 @@ api_hash = str(sys.argv[2])
 phone = str(sys.argv[3])
 file = str(sys.argv[4])
 group = str(sys.argv[5])
+print(file)
 class Relog:
     def __init__(self, lst, filename):
         self.lst = lst
