@@ -4,6 +4,7 @@
 
 # Update Features
 
+- Support macOS \ Linux.
 - Fixed bug with scraping. You can now scrape from public groups of any size.
 - Fixed bug with addbyid.py. You can now start adding by IDs again.
 
